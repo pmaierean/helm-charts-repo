@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "myfirstchart.fullname" . }}
+  namespace: {{ .Values.application.domainName }}
+  labels:
+    {{- include "myfirstchart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "myfirstchart.selectorLabels" . | nindent 4 }}
